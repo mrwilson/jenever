@@ -27,9 +27,11 @@ public class JeneverMain {
 			return;
 		}
 		
-		if (parser.hasOption("help") || parser.getArgs().length == 0) {
+		if (parser.hasOption("help") || parser.getOptions().length == 0) {
 			new HelpFormatter().printHelp("jen <args>", "jenever - A virtual environment manager for java", options, "");
 			System.exit(0);
+		} else {
+			JeneverOptionsHandler.handle(parser);
 		}
 	}
 	
