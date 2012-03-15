@@ -21,7 +21,6 @@ public class Jenever {
 	@Inject
 	public Jenever(JeneverOptionsHandler joh) {
 		this.handler = joh;
-		
 	}
 	
 	public void parseArgs(String[] args) {
@@ -38,13 +37,11 @@ public class Jenever {
 			return;
 		}
 		
-		
-		
 		if (parser.hasOption("help") || parser.getOptions().length == 0) {
-			new HelpFormatter().printHelp("jen <args>", "jenever - A virtual environment manager for java", options, "");
+			new HelpFormatter().printHelp("jen <args>", "jenever - A package manager for java", options, "");
 			System.exit(0);
 		} else {
-			new JeneverOptionsHandler().handle(parser);
+			handler.handle(parser);
 		}
 	}
 	
