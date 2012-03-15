@@ -31,13 +31,8 @@ public class JeneverOptionsHandler {
 		//Handle listing files
 		if (parser.hasOption("ls")) {
 			File jenHome = new File(JeneverOptions.jenHome);
-			if (jenHome.exists()) {
-				for (File f : jenHome.listFiles()) {
+			for (File f : jenHome.listFiles()) {
 					System.out.println(f.getName());
-				}
-			} else {
-				System.out.println(String.format("Cannot find directory %s",System.getenv("JEN_HOME")));
-				return;
 			}
 		}
 		
@@ -59,6 +54,23 @@ public class JeneverOptionsHandler {
 		
 	}
 
+	public void checkParamsSet() {
+		if (!new File(JeneverOptions.jenHome).exists()) {
+			System.out.println(String.format("Cannot find JEN_HOME directory at %s, creating...",JeneverOptions.jenHome));
+			try {
+				File file = new File(JeneverOptions.jenHome);
+				file.mkdir();
+			} catch (Exception e) {
+				System.out.println(String.format("Error: could not create file at , exiting.",JeneverOptions.jenHome));
+				System.out.println(e);
+				System.exit(-1);
+			}
+			
+			System.out.println("Successfully created JEN_HOME folder.");
+		}
+		
+	}
+
 	public List<Option> getOptions() {
 		return JeneverOptions.options;
 	}
@@ -71,7 +83,7 @@ public class JeneverOptionsHandler {
 
 class JeneverOptions {
 
-	public static String jenHome = System.getenv("JEN_HOME") == null ? System.getenv("HOME")+File.pathSeparator+".jen" : System.getenv("JEN_HOME"); 
+	public static String jenHome = System.getenv("JEN_HOME") == null ? System.getenv("HOME")+File.pathSeparator+".jen"+File.pathSeparator+"default" : System.getenv("JEN_HOME"); 
 	
 	@SuppressWarnings("serial")
 	public static List<Option> options = new ArrayList<Option>() {{

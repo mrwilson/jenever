@@ -41,6 +41,7 @@ public class Jenever {
 			new HelpFormatter().printHelp("jen <args>", "jenever - A package manager for java", options, "");
 			System.exit(0);
 		} else {
+			handler.checkParamsSet();
 			handler.handle(parser);
 		}
 	}
