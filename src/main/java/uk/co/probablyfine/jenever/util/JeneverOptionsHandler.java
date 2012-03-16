@@ -27,10 +27,17 @@ public class JeneverOptionsHandler {
 	
 	@SuppressWarnings("static-access")
 	public void handle(CommandLine parser) {
-		
+
 		//Handle listing files
 		if (parser.hasOption("ls")) {
 			File jenHome = new File(JeneverOptions.jenHome);
+
+			if (jenHome.listFiles().length == 0) {
+				System.out.println("No jen packages found.");
+				return;
+			}
+
+
 			for (File f : jenHome.listFiles()) {
 					System.out.println(f.getName());
 			}
@@ -60,6 +67,7 @@ public class JeneverOptionsHandler {
 			try {
 				File file = new File(JeneverOptions.jenHome);
 				file.mkdir();
+	
 			} catch (Exception e) {
 				System.out.println(String.format("Error: could not create file at , exiting.",JeneverOptions.jenHome));
 				System.out.println(e);
@@ -83,7 +91,7 @@ public class JeneverOptionsHandler {
 
 class JeneverOptions {
 
-	public static String jenHome = System.getenv("JEN_HOME") == null ? System.getenv("HOME")+File.pathSeparator+".jen"+File.pathSeparator+"default" : System.getenv("JEN_HOME"); 
+	public static String jenHome = System.getenv("JEN_HOME") == null ? System.getenv("HOME")+File.pathSeparator+".jen" : System.getenv("JEN_HOME"); 
 	
 	@SuppressWarnings("serial")
 	public static List<Option> options = new ArrayList<Option>() {{
