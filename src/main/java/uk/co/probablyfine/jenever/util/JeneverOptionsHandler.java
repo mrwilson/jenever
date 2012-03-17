@@ -10,7 +10,7 @@ import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.probablyfine.jenever.download.JeneverDownloader;
+import uk.co.probablyfine.jenever.download.PackageDownloader;
 
 import com.google.inject.Inject;
 
@@ -18,10 +18,10 @@ import com.google.inject.Inject;
 public class JeneverOptionsHandler {
 
 	private final Logger log = LoggerFactory.getLogger(JeneverOptionsHandler.class);
-	private JeneverDownloader jd;
+	private PackageDownloader jd;
 	
 	@Inject
-	public JeneverOptionsHandler(JeneverDownloader jd) {
+	public JeneverOptionsHandler(PackageDownloader jd) {
 		this.jd = jd;
 	}
 	
