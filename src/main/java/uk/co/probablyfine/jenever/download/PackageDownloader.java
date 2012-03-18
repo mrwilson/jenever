@@ -2,11 +2,13 @@ package uk.co.probablyfine.jenever.download;
 
 import java.util.List;
 
-public class PackageDownloader {
+import com.google.inject.Inject;
 
+public class PackageDownloader {
 	
 	private XmlParser parser;
 
+	@Inject
 	public PackageDownloader(XmlParser parser) {
 		this.parser = parser;
 	}

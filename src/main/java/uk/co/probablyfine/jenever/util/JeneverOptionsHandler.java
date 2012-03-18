@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
 import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +57,7 @@ public class JeneverOptionsHandler {
 		
 		//Install packages
 		if (parser.hasOption("i")) {
+			System.out.println(parser.getOptionValue("i"));
 			jd.process(parser.getOptionValues("i"));
 		}
 		
@@ -98,7 +100,13 @@ class JeneverOptions {
 		
 		add(new Option("q", "quiet", false, "Decrease verbosity."));
 		add(new Option("v", "verbose", false, "Increase verbosity."));
-		add(new Option("i", "install", false, "Install package."));
+		add(OptionBuilder
+				.withLongOpt("install")
+				.withDescription("Install package")
+				.withArgName("package")
+				.hasArg()
+				.create("i"));
+		
 		add(new Option("ls", "list", false, "List available environments."));
 		
 	}};
