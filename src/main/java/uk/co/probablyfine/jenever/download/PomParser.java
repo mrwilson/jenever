@@ -2,7 +2,7 @@ package uk.co.probablyfine.jenever.download;
 
 import java.util.List;
 
-public interface XmlParser {
+public interface PomParser {
 
 	List<Package> getDependencies(Package p);
 

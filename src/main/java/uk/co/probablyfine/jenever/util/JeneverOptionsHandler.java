@@ -1,12 +1,8 @@
 package uk.co.probablyfine.jenever.util;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
 import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,14 +11,15 @@ import uk.co.probablyfine.jenever.download.PackageDownloader;
 
 import com.google.inject.Inject;
 
-
 public class JeneverOptionsHandler {
 
 	private final Logger log = LoggerFactory.getLogger(JeneverOptionsHandler.class);
 	private PackageDownloader jd;
+	private JeneverOptions options;
 	
 	@Inject
-	public JeneverOptionsHandler(PackageDownloader jd) {
+	public JeneverOptionsHandler(JeneverOptions jo, PackageDownloader jd) {
+		this.options = jo;
 		this.jd = jd;
 	}
 	
@@ -31,7 +28,7 @@ public class JeneverOptionsHandler {
 
 		//Handle listing files
 		if (parser.hasOption("ls")) {
-			File jenHome = new File(JeneverOptions.jenHome);
+			File jenHome = new File(options.jenHome);
 
 			if (jenHome.listFiles().length == 0) {
 				System.out.println("No jen packages found.");
@@ -64,51 +61,34 @@ public class JeneverOptionsHandler {
 	}
 
 	public void checkParamsSet() {
-		if (!new File(JeneverOptions.jenHome).exists()) {
-			System.out.println(String.format("Cannot find JEN_HOME directory at %s, creating...",JeneverOptions.jenHome));
+		if (!new File(options.jenHome).exists()) {
+			System.out.println(String.format("Cannot find JEN_HOME directory at %s, creating...",options.jenHome));
 			try {
-				File file = new File(JeneverOptions.jenHome);
+				File file = new File(options.jenHome);
 				file.mkdir();
-	
 			} catch (Exception e) {
-				System.out.println(String.format("Error: could not create file at , exiting.",JeneverOptions.jenHome));
+				System.out.println(String.format("Error: could not create file at , exiting.",options.jenHome));
 				System.out.println(e);
 				System.exit(-1);
 			}
 			
 			System.out.println("Successfully created JEN_HOME folder.");
+			try {
+				File file = new File(options.jenEnv);
+				file.mkdir();
+			} catch (Exception e) {
+				System.out.println(String.format("Error: could not create file at , exiting.",options.jenEnv));
+				System.out.println(e);
+				System.exit(-1);
+			}
+			
+			System.out.println("Successfully created JEN_HOME/default.");
+			
+			
 		}
 		
-	}
-
-	public List<Option> getOptions() {
-		return JeneverOptions.options;
-	}
-	
-	public String getJenHome() {
-		return JeneverOptions.jenHome;
-	}
-	
-}
-
-class JeneverOptions {
-
-	public static String jenHome = System.getenv("JEN_HOME") == null ? System.getenv("HOME")+File.pathSeparator+".jen" : System.getenv("JEN_HOME"); 
-	
-	@SuppressWarnings("serial")
-	public static List<Option> options = new ArrayList<Option>() {{
 		
-		add(new Option("q", "quiet", false, "Decrease verbosity."));
-		add(new Option("v", "verbose", false, "Increase verbosity."));
-		add(OptionBuilder
-				.withLongOpt("install")
-				.withDescription("Install package")
-				.withArgName("package")
-				.hasArg()
-				.create("i"));
 		
-		add(new Option("ls", "list", false, "List available environments."));
-		
-	}};
+	}
 	
 }

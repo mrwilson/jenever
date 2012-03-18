@@ -9,6 +9,7 @@ import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.probablyfine.jenever.util.JeneverOptions;
 import uk.co.probablyfine.jenever.util.JeneverOptionsHandler;
 
 import com.google.inject.Inject;
@@ -17,15 +18,17 @@ public class Jenever {
 
 	private final Logger log = LoggerFactory.getLogger(Jenever.class);
 	private JeneverOptionsHandler handler;
+	private JeneverOptions jo;
 	
 	@Inject
-	public Jenever(JeneverOptionsHandler joh) {
+	public Jenever(JeneverOptions jo, JeneverOptionsHandler joh) {
+		this.jo = jo;
 		this.handler = joh;
 	}
 	
 	public void parseArgs(String[] args) {
 		Options options = new Options();
-		for (Option o : handler.getOptions()) {
+		for (Option o : jo.options) {
 			options.addOption(o);
 		}
 		

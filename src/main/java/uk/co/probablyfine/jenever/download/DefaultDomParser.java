@@ -19,23 +19,27 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import uk.co.probablyfine.jenever.util.JeneverOptions;
+
 import com.google.common.base.Joiner;
 import com.google.inject.Inject;
 
 
-public class DefaultDomParser implements XmlParser {
+public class DefaultDomParser implements PomParser {
 
-	private final String BASE_URL="http://repo1.maven.org/maven2";
-	
+	private JeneverOptions options;
+
 	@Inject
-	public DefaultDomParser() {}
+	public DefaultDomParser(JeneverOptions jo) {
+		this.options = jo;
+	}
 	
 	public List<Package> getDependencies(Package p) {
 		
 		String pom = p.artifactId+"-"+p.version+".pom";
 		String path = p.groupId.replaceAll("\\.", "/");
 		
-		String url = Joiner.on("/").join(new String[] { BASE_URL, path , p.artifactId, p.version, pom });
+		String url = Joiner.on("/").join(new String[] {  options.BASE_URL, path , p.artifactId, p.version, pom });
 		
 		Document doc;
 		try {
@@ -69,8 +73,6 @@ public class DefaultDomParser implements XmlParser {
 			return null;
 		}
 		
-		System.out.println(links);
-	
 		List<Package> deps = new ArrayList<Package>();
 		
 		for (int i = 0; i < links.getLength(); i++) {
