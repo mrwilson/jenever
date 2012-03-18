@@ -74,33 +74,50 @@ public class DefaultDomParser implements XmlParser {
 		List<Package> deps = new ArrayList<Package>();
 		
 		for (int i = 0; i < links.getLength(); i++) {
-			deps.add(nodeToPackage(links.item(i)));
+			Package pa = nodeToPackage(links.item(i));
+			
+			if (pa != null) {
+				deps.add(pa);
+			}
+			
 		}
 	
-		return null;
+		return deps;
 	}
 
 	private Package nodeToPackage(Node item) {
 		
+		Package p = new Package();
+		
 		NodeList params = item.getChildNodes();
 		for (int i = 0; i < params.getLength(); i++) {
+			
 			Node current = params.item(i);
 			if (current instanceof Element) {
 				
-				if (current.getNodeName().equals("artifactId")) {
-					
+				
+				
+				if (current.getNodeName().equals("groupId")) {
+					p.groupId = current.getFirstChild().getNodeValue();
 				}
 				
-				System.out.println(i + " - " + params.item(i).getNodeName());
+				if (current.getNodeName().equals("artifactId")) {
+					p.artifactId = current.getFirstChild().getNodeValue();
+				}
+				
+				if (current.getNodeName().equals("version")) {
+					p.version = current.getFirstChild().getNodeValue();
+				}
+				
 			}
 			
 		}
-		
-		//.item(3).getFirstChild().getNodeValue());
 
+		if (p.groupId.contains("${") || p.artifactId.contains("${") || p.version.contains("${")) {
+			return null;
+		}
 		
-		
-		return null;
+		return p;
 	}
 
 }
