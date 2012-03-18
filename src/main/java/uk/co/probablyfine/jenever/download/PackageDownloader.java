@@ -14,7 +14,7 @@ public class PackageDownloader {
 	public void process(String[] optionValues) {
 		
 		for(String packageString : optionValues) {
-			 
+			 downloadPackage(new Package(packageString));
 		}
 		
 	}
@@ -28,10 +28,6 @@ public class PackageDownloader {
 			}
 		}
 		
-		
 	}
 	
-
-
 }
-
