@@ -1,0 +1,18 @@
+usejen() {
+	source $JEN_HOME/config
+	if [ -n "${JEN_ENV:+x}" ] ; then
+		echo "Changing java classpath to include $JEN_ENV classes"
+		
+		export OLD_CP=$CLASSPATH
+		
+		if [ -n "${CLASS_PATH:+x}" ]; then
+			export CLASSPATH=$CLASSPATH:$JEN_HOME/$JEN_ENV/*
+		else 
+			export CLASSPATH=$JEN_HOME/$JEN_ENV/*
+		fi
+	fi
+}
+
+exitjen() {
+	export CLASSPATH=$OLD_CP
+}
