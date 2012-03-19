@@ -1,7 +1,8 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
-export JEN_ENV=foo
-export JEN_HOME=$HOME/.jen/
+echo -e "export JEN_ENV=default\nexport JEN_HOME=$HOME/.jen" > $HOME/.jen/config
 
-java -jar target/jenever-0.0.1-SNAPSHOT-jar-with-dependencies.jar $*
+source $HOME/.jen/config
+
+java -jar target/jenever-0.0.1-jar-with-dependencies.jar $*
 

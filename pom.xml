@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.co.probablyfine</groupId>
   <artifactId>jenever</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <name>Jenever</name>
   <description>A virtualenv-alike for java</description>
 
