@@ -61,6 +61,10 @@ public class JeneverOptionsHandler {
 	}
 
 	public void checkParamsSet() {
+		
+		System.out.println(options.jenHome);
+		System.out.println(options.jenEnv);
+		
 		if (!new File(options.jenHome).exists()) {
 			System.out.println(String.format("Cannot find JEN_HOME directory at %s, creating...",options.jenHome));
 			try {
@@ -71,8 +75,10 @@ public class JeneverOptionsHandler {
 				System.out.println(e);
 				System.exit(-1);
 			}
-			
-			System.out.println("Successfully created JEN_HOME folder.");
+		}
+		
+		if (!new File(options.jenEnv).exists()) {
+			System.out.println("Successfully created JEN_ENV folder at "+options.jenEnv+".");
 			try {
 				File file = new File(options.jenEnv);
 				file.mkdir();
@@ -84,11 +90,11 @@ public class JeneverOptionsHandler {
 			
 			System.out.println("Successfully created JEN_HOME/default.");
 			
-			
 		}
-		
-		
-		
+	
 	}
+		
+		
+	
 	
 }
