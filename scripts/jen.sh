@@ -2,8 +2,11 @@
 
 export JEN_HOME=${JEN_HOME:=$HOME/.jen}
 export JEN_CONFIG=$JEN_HOME/config
-touch $JEN_CONFIG
-echo $JEN_HOME
+if [ ! -d "$JEN_HOME" ]; then
+    java -jar target/jenever-0.0.1-jar-with-dependencies.jar --init
+    touch $JEN_HOME/config
+    exit 1
+fi
 
 while getopts ":m:" opt; do
 	case $opt in
@@ -24,7 +27,4 @@ done
 
 source $JEN_HOME/config
 
-echo $JEN_ENV
-
 java -jar target/jenever-0.0.1-jar-with-dependencies.jar $*
-

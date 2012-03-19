@@ -29,13 +29,10 @@ public class JeneverOptionsHandler {
 		//Handle listing files
 		if (parser.hasOption("ls")) {
 			File jenHome = new File(options.jenHome);
-
 			if (jenHome.listFiles().length == 0) {
-				System.out.println("No jen packages found.");
+				System.out.println("No jen environments found.");
 				return;
 			}
-
-
 			for (File f : jenHome.listFiles()) {
 					System.out.println(f.getName());
 			}
@@ -54,22 +51,18 @@ public class JeneverOptionsHandler {
 		
 		//Install packages
 		if (parser.hasOption("i")) {
-			System.out.println(parser.getOptionValue("i"));
 			jd.process(parser.getOptionValues("i"));
 		}
 		
 	}
 
 	public void checkParamsSet() {
-		
-		System.out.println(options.jenHome);
-		System.out.println(options.jenEnv);
-		
 		if (!new File(options.jenHome).exists()) {
-			System.out.println(String.format("Cannot find JEN_HOME directory at %s, creating...",options.jenHome));
+			System.out.println("Cannot find current environment directory at "+options.jenEnv+" - creating...");
 			try {
 				File file = new File(options.jenHome);
 				file.mkdir();
+				System.out.println("Successfully created JEN_ENV folder at "+options.jenEnv+".");
 			} catch (Exception e) {
 				System.out.println(String.format("Error: could not create file at , exiting.",options.jenHome));
 				System.out.println(e);
@@ -78,23 +71,19 @@ public class JeneverOptionsHandler {
 		}
 		
 		if (!new File(options.jenEnv).exists()) {
-			System.out.println("Successfully created JEN_ENV folder at "+options.jenEnv+".");
+			System.out.println("Cannot find current environment directory at "+options.jenEnv+" - creating...");
 			try {
 				File file = new File(options.jenEnv);
 				file.mkdir();
+				System.out.println("Successfully created environment directory at "+options.jenEnv);
 			} catch (Exception e) {
 				System.out.println(String.format("Error: could not create file at , exiting.",options.jenEnv));
 				System.out.println(e);
 				System.exit(-1);
 			}
 			
-			System.out.println("Successfully created JEN_HOME/default.");
-			
 		}
 	
 	}
-		
-		
-	
 	
 }

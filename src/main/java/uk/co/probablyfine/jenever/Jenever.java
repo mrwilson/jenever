@@ -43,6 +43,8 @@ public class Jenever {
 		if (parser.hasOption("help") || parser.getOptions().length == 0) {
 			new HelpFormatter().printHelp("jen <args>", "jenever - A package manager for java", options, "");
 			System.exit(0);
+		} else if (parser.hasOption("init")) {
+			handler.checkParamsSet();
 		} else {
 			handler.checkParamsSet();
 			handler.handle(parser);

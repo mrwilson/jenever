@@ -25,12 +25,12 @@ public class PackageDownloader {
 	}
 	
 	public void process(String[] optionValues) {
-		
 		for(String packageString : optionValues) {
 			 try {
 				downloadPackage(new Package(packageString));
 			} catch (IOException e) {
-				System.out.println();
+				System.out.println("Could not download package "+packageString+", exiting...");
+				System.exit(1);
 			}
 		}
 		
