@@ -1,4 +1,5 @@
 usejen() {
+	set -f
 	source $JEN_HOME/config
 	if [ -n "${JEN_ENV:+x}" ] ; then
 		echo "Changing java classpath to include $JEN_ENV classes"
