@@ -11,7 +11,7 @@ public class JeneverOptions {
 	
 	public final String jenHome = System.getenv("JEN_HOME") == null ? System.getenv("HOME")+File.separator+".jen" : System.getenv("JEN_HOME"); 
 	
-	public final String jenEnv = System.getenv("JEN_ENV") == null ? jenHome+File.separator+System.getenv("JEN_ENV") : jenHome+File.separator+"default"; 
+	public final String jenEnv = System.getenv("JEN_ENV") == null ? jenHome+File.separator+"default" : jenHome+File.separator+System.getenv("JEN_ENV"); 
 	
 	public final String BASE_URL="http://repo1.maven.org/maven2";
 	

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export ${JEN_HOME:=$HOME/.jen}
+export JEN_HOME=${JEN_HOME:=$HOME/.jen}
 export JEN_CONFIG=$JEN_HOME/config
-
+touch $JEN_CONFIG
 echo $JEN_HOME
 
 while getopts ":m:" opt; do
