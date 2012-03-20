@@ -1,6 +1,7 @@
-
 alias java='process $(which java) $args';
+alias javac='process $(which javac) $args';
 
+#Use the currently set JEN_ENV as the library directory
 usejen() {
 	set -f
 	source $JEN_HOME/config
@@ -17,12 +18,13 @@ usejen() {
 	fi
 }
 
+#Reset classpath to what it was before.
 exitjen() {
 	export CLASSPATH=$OLD_CP
 }
 
- 
- process() {
+#Modify classpath parameter in the command to append $CLASSPATH 
+process() {
          index=0;
  
          declare -a arr=($@);
@@ -47,4 +49,3 @@ exitjen() {
          fi
  
 }
-
