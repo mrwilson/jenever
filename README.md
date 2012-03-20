@@ -1,4 +1,4 @@
-Insant, a set of annotations to provide debugging at runtime.
+Jenever (jen), a package manager and environment manager for java, using Maven repositories.
 
 # How to use
 
@@ -14,9 +14,9 @@ Jenever has two functions: a small dependency manager using the maven repositori
 ##
     # Add this to your .bashrc, to use the environment switcher
     source /path/to/jenever/scripts/jenutil
-
+    
     ./scripts/jen.sh --init
     ./scripts/jen.sh -m foobar
     ./scripts/jen.sh --install <groupid>:<artifactid>:<version>
 
-Not fully tested, use at your own risk.
+Not fully tested, use at your own risk. More serious documentation to follow.
