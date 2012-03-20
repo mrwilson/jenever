@@ -1,3 +1,6 @@
+
+alias java='process $(which java) $args';
+
 usejen() {
 	set -f
 	source $JEN_HOME/config
@@ -17,3 +20,31 @@ usejen() {
 exitjen() {
 	export CLASSPATH=$OLD_CP
 }
+
+ 
+ process() {
+         index=0;
+ 
+         declare -a arr=($@);
+         for var in ${arr[@]};
+         do
+                 if [[ $var == "-cp" || $var == "-classpath" ]]; then
+                         let index++;
+                         break;
+                 fi
+         let index++;
+         done
+ 
+         if [[ $index == ${#arr[@]} ]]; then
+                 eval "${arr[@]}";
+         else
+ 
+         newpath=$CLASSPATH:${arr[$index]};
+ 
+         arr[$index]=$newpath;
+ 
+         eval "${arr[@]}";
+         fi
+ 
+}
+
