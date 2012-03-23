@@ -37,6 +37,11 @@ public class PackageDownloader {
 	}
 	
 	public void downloadPackage(Package p) throws IOException {
+		
+		if (p.version == null) {
+			p.version = parser.mostRecentVersion(p);
+		}
+				
 		List<Package> deps = parser.getDependencies(p);
 		
 		if (deps.size() > 0) {
@@ -69,11 +74,6 @@ public class PackageDownloader {
 	}
 
 	private String getDownloadUrl(Package p) {
-		
-		if (p.version == null) {
-			p.version = parser.mostRecentVersion(p);
-		}
-		
 		
 		return Joiner.on("/").join(new String[] { 
 				options.BASE_URL,

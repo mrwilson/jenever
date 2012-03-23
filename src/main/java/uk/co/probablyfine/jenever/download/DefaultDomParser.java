@@ -39,7 +39,11 @@ public class DefaultDomParser implements PomParser {
 		String pom = p.artifactId+"-"+p.version+".pom";
 		String path = p.groupId.replaceAll("\\.", "/");
 		
-		String url = Joiner.on("/").join(new String[] {  options.BASE_URL, path , p.artifactId, p.version, pom });
+		String url = Joiner.on("/").join(new String[] {  options.BASE_URL,
+				path,
+				p.artifactId, 
+				p.version, 
+				pom });
 		
 		Document doc;
 		try {
