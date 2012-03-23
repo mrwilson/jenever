@@ -6,4 +6,6 @@ public interface PomParser {
 
 	List<Package> getDependencies(Package p);
 
+	String mostRecentVersion(Package p);
+
 }

@@ -1,14 +1,12 @@
 package uk.co.probablyfine.jenever;
 
-import static org.junit.Assert.*;
-
-import java.util.Arrays;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.google.common.base.Joiner;
-
 import uk.co.probablyfine.jenever.download.Package;
+
+import com.google.common.base.Joiner;
 
 public class PackageObjectTest {
 
@@ -16,7 +14,7 @@ public class PackageObjectTest {
 	public void testCanonicalName() {
 		String[] params = new String[]{"foo.bar","baz","1.0"};
 		
-		Package p = new Package().setSignature(Joiner.on(":").join(Arrays.asList(params)));
+		Package p = new Package().setSignature(Joiner.on(":").join(params));
 		assertEquals(p.groupId,params[0]);
 		assertEquals(p.artifactId,params[1]);
 		assertEquals(p.version, params[2]);
@@ -27,7 +25,7 @@ public class PackageObjectTest {
 	public void testNoVersion() {
 		String[] params = new String[]{"foo.bar","baz"};
 		
-		Package p = new Package().setSignature(Joiner.on(":").join(Arrays.asList(params)));
+		Package p = new Package().setSignature(Joiner.on(":").join(params));
 		assertEquals(p.groupId,params[0]);
 		assertEquals(p.artifactId,params[1]);
 		assertEquals(p.version, null);
@@ -38,7 +36,7 @@ public class PackageObjectTest {
 	public void testJustArtifact() {
 		String[] params = new String[]{"baz"};
 		
-		Package p = new Package().setSignature(Joiner.on(":").join(Arrays.asList(params)));
+		Package p = new Package().setSignature(Joiner.on(":").join(params));
 		assertEquals(p.groupId,null);
 		assertEquals(p.artifactId,params[0]);
 		assertEquals(p.version, null);

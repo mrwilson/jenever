@@ -48,13 +48,10 @@ public class PackageDownloader {
 		
 		System.out.println("Downloading "+p.toString()+"...");
 		
-		String downloadUrl = Joiner.on("/").join(new String[] { 
-				options.BASE_URL,
-				p.groupId.replaceAll("\\.", "/"),
-				p.artifactId,
-				p.version,
-				p.artifactId+"-"+p.version+".jar"
-		});
+		
+		
+		
+		String downloadUrl = getDownloadUrl(p);
 		
 		URL jarRequest = new URL(downloadUrl);
 
@@ -68,6 +65,24 @@ public class PackageDownloader {
 		
 		System.out.println("Download complete.");
 
+		
+	}
+
+	private String getDownloadUrl(Package p) {
+		
+		if (p.version == null) {
+			p.version = parser.mostRecentVersion(p);
+		}
+		
+		
+		return Joiner.on("/").join(new String[] { 
+				options.BASE_URL,
+				p.groupId.replaceAll("\\.", "/"),
+				p.artifactId,
+				p.version,
+				p.artifactId+"-"+p.version+".jar"
+		});
+		
 		
 	}
 	

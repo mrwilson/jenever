@@ -97,8 +97,6 @@ public class DefaultDomParser implements PomParser {
 			Node current = params.item(i);
 			if (current instanceof Element) {
 				
-				
-				
 				if (current.getNodeName().equals("groupId")) {
 					p.groupId = current.getFirstChild().getNodeValue();
 				}
@@ -122,4 +120,50 @@ public class DefaultDomParser implements PomParser {
 		return p;
 	}
 
-}
+	public String mostRecentVersion(Package p) {
+		String path = p.groupId.replaceAll("\\.", "/");
+		
+		String url = Joiner.on("/").join(new String[] {  
+				options.BASE_URL, 
+				path , 
+				p.artifactId, 
+				"maven-metadata.xml" });
+		
+		Document doc;
+		try {
+			doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new URL(url).openStream());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+		XPath xpath = XPathFactory.newInstance().newXPath();
+		NodeList links;
+		try {
+			links = (NodeList) xpath.evaluate("//versioning/release", doc,
+			    XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+		return links.item(links.getLength()-1).getChildNodes().item(0).getNodeValue();
+			
+		}
+	}
+
+
