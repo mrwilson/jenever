@@ -13,7 +13,6 @@ public class JeneverModule extends AbstractModule{
 
 	@Override
 	protected void configure() {
-		
 		bind(Jenever.class);
 		bind(JeneverOptionsHandler.class);
 		bind(PackageDownloader.class);
