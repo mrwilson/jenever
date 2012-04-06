@@ -27,6 +27,12 @@ public class JeneverOptions {
 				.create("i"));
 		add(new Option("ls", "list", false, "List available environments."));
 		add(new Option("k","init", false, "Initialise environment folders." ));
+		add(OptionBuilder
+				.withLongOpt("environment")
+				.withDescription("Change environment")
+				.withArgName("env")
+				.hasArg()
+				.create("e"));
 	}};
 	
 }

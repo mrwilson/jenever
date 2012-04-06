@@ -1,14 +1,17 @@
 package uk.co.probablyfine.jenever.util;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.probablyfine.jenever.Jenever;
 import uk.co.probablyfine.jenever.download.PackageDownloader;
 
+import com.google.common.io.Files;
 import com.google.inject.Inject;
 
 public class JeneverOptionsHandler {
@@ -54,6 +57,11 @@ public class JeneverOptionsHandler {
 			jd.process(parser.getOptionValues("i"));
 		}
 		
+		//Change environment
+		if (parser.hasOption("e")) {
+			writeConfig(parser.getOptionValues("e"));
+		}
+		
 	}
 
 	public void checkParamsSet() {
@@ -83,7 +91,35 @@ public class JeneverOptionsHandler {
 			}
 			
 		}
+		
+		writeConfig(new String[] { "default" });
 	
+	}
+	
+	public void writeConfig(String[] env) {
+		String filename;
+		String contents;
+		
+		if (System.getProperty("os.name").startsWith("Windows")) {
+			filename = "config.bat";
+			contents = String.format("set JEN_ENV=%s", env[0]);
+		} else if (System.getProperty("os.name").startsWith("Linux")) {
+			filename = "config";
+			contents = String.format("export JEN_ENV=%s", env[0]);
+		} else {
+			//Handle other os here
+			return;
+		}
+		
+		
+		try {
+			Files.write(contents.getBytes(), new File(options.jenHome+File.separator+filename));
+		} catch (IOException e) {
+			System.out.println("Could not write to file.");
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 }
