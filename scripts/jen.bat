@@ -11,7 +11,7 @@ if not exist %JEN_HOME% (
 	
 ) 
 
-echo %JEN_HOME%\config.bat
+call %JEN_HOME%\config.bat
 
 java -jar target\jenever-0.0.1-jar-with-dependencies.jar %*
 
