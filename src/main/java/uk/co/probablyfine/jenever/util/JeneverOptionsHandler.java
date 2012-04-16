@@ -8,7 +8,6 @@ import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.probablyfine.jenever.Jenever;
 import uk.co.probablyfine.jenever.download.PackageDownloader;
 
 import com.google.common.io.Files;
@@ -59,7 +58,9 @@ public class JeneverOptionsHandler {
 		
 		//Change environment
 		if (parser.hasOption("e")) {
+			log.debug("Attempting to change environment to {}",parser.getOptionValues("e"));
 			writeConfig(parser.getOptionValues("e"));
+			log.info("Succesfully changed environment to {}",parser.getOptionValue("e"));
 		}
 		
 	}
