@@ -4,11 +4,12 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.probablyfine.jenever.download.PackageDownloader;
+
+import ch.qos.logback.classic.Level;
 
 import com.google.common.io.Files;
 import com.google.inject.Inject;
@@ -42,12 +43,12 @@ public class JeneverOptionsHandler {
 		
 		//Increase verbosity
 		if (parser.hasOption("v")) {
-			org.apache.log4j.Logger log = (org.apache.log4j.Logger) LoggerFactory.getLogger(this.log.ROOT_LOGGER_NAME);
+			ch.qos.logback.classic.Logger log = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(this.log.ROOT_LOGGER_NAME);
 			log.setLevel(Level.DEBUG);
 		}
 		//Increase verbosity
 		if (parser.hasOption("q")) {
-			org.apache.log4j.Logger log = (org.apache.log4j.Logger) LoggerFactory.getLogger(this.log.ROOT_LOGGER_NAME);
+			ch.qos.logback.classic.Logger log = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(this.log.ROOT_LOGGER_NAME);
 			log.setLevel(Level.ERROR);
 		}
 		
