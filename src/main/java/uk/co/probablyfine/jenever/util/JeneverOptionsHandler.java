@@ -31,13 +31,13 @@ public class JeneverOptionsHandler {
 
 		//Handle listing files
 		if (parser.hasOption("ls")) {
-			File jenHome = new File(options.jenHome);
+			final File jenHome = new File(options.jenHome);
 			if (jenHome.listFiles().length == 0) {
-				System.out.println("No jen environments found.");
+				log.info("No jen environments found.");
 				return;
 			}
 			for (File f : jenHome.listFiles()) {
-					System.out.println(f.getName());
+				log.info("{}",f.getName());
 			}
 		}
 		
@@ -46,7 +46,7 @@ public class JeneverOptionsHandler {
 			ch.qos.logback.classic.Logger log = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(this.log.ROOT_LOGGER_NAME);
 			log.setLevel(Level.DEBUG);
 		}
-		//Increase verbosity
+		//Decrease verbosity
 		if (parser.hasOption("q")) {
 			ch.qos.logback.classic.Logger log = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(this.log.ROOT_LOGGER_NAME);
 			log.setLevel(Level.ERROR);
@@ -68,27 +68,29 @@ public class JeneverOptionsHandler {
 
 	public void checkParamsSet() {
 		if (!new File(options.jenHome).exists()) {
-			System.out.println("Cannot find current environment directory at "+options.jenEnv+" - creating...");
+			log.info("Cannot find JEN_HOME directory at {} - creating...", options.jenHome);
 			try {
-				File file = new File(options.jenHome);
+				log.debug("Creating file ... ");
+				final File file = new File(options.jenHome);
 				file.mkdir();
-				System.out.println("Successfully created JEN_ENV folder at "+options.jenEnv+".");
+				log.info("Successfully created environment directory at {}",options.jenEnv);
 			} catch (Exception e) {
-				System.out.println(String.format("Error: could not create file at , exiting.",options.jenHome));
-				System.out.println(e);
+				log.error("Error: could not create file at {}, exiting.",options.jenEnv);
+				log.error("{}",e);
 				System.exit(-1);
 			}
 		}
 		
 		if (!new File(options.jenEnv).exists()) {
-			System.out.println("Cannot find current environment directory at "+options.jenEnv+" - creating...");
+			log.info("Cannot find current environment directory at {} - creating...", options.jenEnv);
 			try {
-				File file = new File(options.jenEnv);
+				log.debug("Creating file ... ");
+				final File file = new File(options.jenEnv);
 				file.mkdir();
-				System.out.println("Successfully created environment directory at "+options.jenEnv);
+				log.info("Successfully created environment directory at {}",options.jenEnv);
 			} catch (Exception e) {
-				System.out.println(String.format("Error: could not create file at , exiting.",options.jenEnv));
-				System.out.println(e);
+				log.error("Error: could not create file at {}, exiting.",options.jenEnv);
+				log.error("{}",e);
 				System.exit(-1);
 			}
 			
@@ -117,8 +119,7 @@ public class JeneverOptionsHandler {
 		try {
 			Files.write(contents.getBytes(), new File(options.jenHome+File.separator+filename));
 		} catch (IOException e) {
-			System.out.println("Could not write to file.");
-			e.printStackTrace();
+			log.error("Could not write to config file - {}",e);
 		}
 		
 		

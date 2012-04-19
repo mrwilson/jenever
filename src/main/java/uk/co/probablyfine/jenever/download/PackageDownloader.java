@@ -8,6 +8,9 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.co.probablyfine.jenever.util.JeneverOptions;
 
 import com.google.common.base.Joiner;
@@ -17,7 +20,8 @@ public class PackageDownloader {
 	
 	private PomParser parser;
 	private JeneverOptions options;
-
+	private final Logger log = LoggerFactory.getLogger(PackageDownloader.class);
+	
 	@Inject
 	public PackageDownloader(JeneverOptions jo, PomParser parser) {
 		this.options = jo;
