@@ -67,8 +67,12 @@ public class JeneverOptionsHandler {
 			log.info("Succesfully changed environment to {}",parser.getOptionValue("e"));
 		}
 		
+		if (parser.hasOption("l")) {
+			fs.makeLibs(parser.getOptionValue("l"));
+		}
+		
 		if (parser.hasOption("m")) {
-			fs.makeLibs(parser.getOptionValue("m"));
+			fs.makeManifest(parser.getOptionValue("m"));
 		}
 		
 	}

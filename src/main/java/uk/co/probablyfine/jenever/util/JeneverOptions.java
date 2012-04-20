@@ -38,6 +38,12 @@ public class JeneverOptions {
 				.withDescription("Make a lib directory containing the environment jars in the current directory.")
 				.withArgName("env")
 				.hasOptionalArg()
+				.create("l"));
+		add(OptionBuilder
+				.withLongOpt("manifest")
+				.withDescription("Make a manifest file containing the names of environment jars in the current directory.")
+				.withArgName("env")
+				.hasOptionalArg()
 				.create("m"));
 	}};
 	
