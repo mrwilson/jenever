@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.probablyfine.jenever.download.PackageDownloader;
+import uk.co.probablyfine.jenever.fs.FileSystem;
 
 import ch.qos.logback.classic.Level;
 
@@ -19,11 +20,13 @@ public class JeneverOptionsHandler {
 	private final Logger log = LoggerFactory.getLogger(JeneverOptionsHandler.class);
 	private PackageDownloader jd;
 	private JeneverOptions options;
+	private FileSystem fs;
 	
 	@Inject
-	public JeneverOptionsHandler(JeneverOptions jo, PackageDownloader jd) {
+	public JeneverOptionsHandler(JeneverOptions jo, PackageDownloader jd, FileSystem fs) {
 		this.options = jo;
 		this.jd = jd;
+		this.fs = fs;
 	}
 	
 	@SuppressWarnings("static-access")
@@ -62,6 +65,10 @@ public class JeneverOptionsHandler {
 			log.debug("Attempting to change environment to {}",parser.getOptionValues("e"));
 			writeConfig(parser.getOptionValues("e"));
 			log.info("Succesfully changed environment to {}",parser.getOptionValue("e"));
+		}
+		
+		if (parser.hasOption("m")) {
+			fs.makeLibs("foo");
 		}
 		
 	}
