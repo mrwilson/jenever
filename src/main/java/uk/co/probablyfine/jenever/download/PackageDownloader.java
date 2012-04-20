@@ -31,13 +31,14 @@ public class PackageDownloader {
 	public void process(String[] optionValues) {
 		for(String packageString : optionValues) {
 			 try {
+				log.info("Processing: {}",packageString);
 				downloadPackage(new Package().setSignature(packageString));
+				log.info("");
 			} catch (IOException e) {
-				System.out.println("Could not download package "+packageString+", exiting...");
+				log.info("Could not download package {}, exiting...",packageString);
 				System.exit(1);
 			}
 		}
-		
 	}
 	
 	public void downloadPackage(Package p) throws IOException {
@@ -46,19 +47,22 @@ public class PackageDownloader {
 			p.version = parser.mostRecentVersion(p);
 		}
 				
-		List<Package> deps = parser.getDependencies(p);
+		final List<Package> deps;
+		try {
+			deps = parser.getDependencies(p);
+		} catch (RuntimeException e) {
+			log.error("Error: Unable to resolve package data from {}, aborting.",p.toString());
+			return;
+		}
 		
 		if (deps.size() > 0) {
-			System.out.println(p.toString() + " has " + deps.size() + " dependencies, resolving...");
+			log.info("{} has {} dependencies, resolving...",p.toString(),deps.size());
 			for(Package dependency : deps) {
 				downloadPackage(dependency);
 			}
 		}
 		
-		System.out.println("Downloading "+p.toString()+"...");
-		
-		
-		
+		log.info("Downloading {} ...",p.toString());
 		
 		String downloadUrl = getDownloadUrl(p);
 		
@@ -72,7 +76,7 @@ public class PackageDownloader {
 
 		fos.close();
 		
-		System.out.println("Download complete.");
+		log.info("Download complete.");
 
 		
 	}

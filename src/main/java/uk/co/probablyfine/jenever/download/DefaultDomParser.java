@@ -13,6 +13,8 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,7 +30,8 @@ import com.google.inject.Inject;
 public class DefaultDomParser implements PomParser {
 
 	private JeneverOptions options;
-
+	private Logger log = LoggerFactory.getLogger(DefaultDomParser.class);
+	
 	@Inject
 	public DefaultDomParser(JeneverOptions jo) {
 		this.options = jo;
@@ -36,10 +39,10 @@ public class DefaultDomParser implements PomParser {
 	
 	public List<Package> getDependencies(Package p) {
 		
-		String pom = p.artifactId+"-"+p.version+".pom";
-		String path = p.groupId.replaceAll("\\.", "/");
+		final String pom = p.artifactId+"-"+p.version+".pom";
+		final String path = p.groupId.replaceAll("\\.", "/");
 		
-		String url = Joiner.on("/").join(new String[] {  options.BASE_URL,
+		final String url = Joiner.on("/").join(new String[] {  options.BASE_URL,
 				path,
 				p.artifactId, 
 				p.version, 
@@ -47,6 +50,7 @@ public class DefaultDomParser implements PomParser {
 		
 		Document doc;
 		try {
+			log.debug("Attempting to parse xml file at {}",url);
 			doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new URL(url).openStream());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -57,8 +61,7 @@ public class DefaultDomParser implements PomParser {
 			e.printStackTrace();
 			return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("File does not exist at {}",url);
 			return null;
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -81,11 +84,9 @@ public class DefaultDomParser implements PomParser {
 		
 		for (int i = 0; i < links.getLength(); i++) {
 			Package pa = nodeToPackage(links.item(i));
-			
 			if (pa != null) {
 				deps.add(pa);
 			}
-			
 		}
 	
 		return deps;
@@ -145,8 +146,7 @@ public class DefaultDomParser implements PomParser {
 			e.printStackTrace();
 			return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("File does not exist at {}",url);
 			return null;
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block

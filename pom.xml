@@ -55,7 +55,6 @@
   		<artifactId>commons-cli</artifactId>
   		<version>1.0</version>
   	</dependency>
-
   	<dependency>
   		<groupId>junit</groupId>
   		<artifactId>junit</artifactId>
@@ -67,11 +66,9 @@
   		<version>1.6.4</version>
   	</dependency>
   	<dependency>
-	<groupId>ch.qos.logback</groupId>
-	<artifactId>logback-classic</artifactId>
-	<version>1.0.1</version>
-</dependency>
-            
-  	
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>logback-classic</artifactId>
+		<version>1.0.1</version>
+	</dependency>
   </dependencies>
 </project>

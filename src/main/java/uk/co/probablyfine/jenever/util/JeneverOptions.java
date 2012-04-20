@@ -23,7 +23,7 @@ public class JeneverOptions {
 				.withLongOpt("install")
 				.withDescription("Install package")
 				.withArgName("package")
-				.hasArg()
+				.hasArgs()
 				.create("i"));
 		add(new Option("ls", "list", false, "List available environments."));
 		add(new Option("k","init", false, "Initialise environment folders." ));
