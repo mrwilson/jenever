@@ -68,7 +68,7 @@ public class JeneverOptionsHandler {
 		}
 		
 		if (parser.hasOption("m")) {
-			fs.makeLibs("foo");
+			fs.makeLibs(parser.getOptionValue("m"));
 		}
 		
 	}

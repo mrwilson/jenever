@@ -37,7 +37,7 @@ public class JeneverOptions {
 				.withLongOpt("make-lib")
 				.withDescription("Make a lib directory containing the environment jars in the current directory.")
 				.withArgName("env")
-				.hasArg()
+				.hasOptionalArg()
 				.create("m"));
 	}};
 	

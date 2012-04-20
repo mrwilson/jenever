@@ -37,7 +37,15 @@ public class FileSystem {
 		
 		log.info("Successfully created folder, copying jars.");
 		
-		final File jarDir = new File(options.jenEnv);
+		
+		final File jarDir;
+		
+		if( null == envName) {
+			jarDir = new File(options.jenEnv);
+		} else {
+			jarDir = new File(options.jenHome+File.separator+envName);
+		}
+		
 		
 		for (final File jar : jarDir.listFiles()) {
 			
