@@ -7,12 +7,12 @@ if "%JEN_HOME%" == "" (
 )
 
 if not exist %JEN_HOME% (
-	java -jar target\jenever-0.0.1-jar-with-dependencies.jar --init
+	java -jar %JEN_HOME%\jenever.jar --init
 	
 ) 
 
 call %JEN_HOME%\config.bat
 
-java -jar target\jenever-0.0.1-jar-with-dependencies.jar %*
+java -jar %JEN_HOME%\jenever.jar %*
 
 

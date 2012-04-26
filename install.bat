@@ -12,7 +12,7 @@ set JEN_CONFIG=%JEN_HOME%\config
 echo Making JEN_HOME directory at %JEN_HOME%
 md %JEN_HOME%
 md %JEN_HOME%\scripts
-echo.>%JEN_HOME%\config
+echo.>%JEN_HOME%\config.bat
 echo Done
 
 echo Copying files to %JEN_HOME%
