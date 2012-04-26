@@ -16,7 +16,7 @@ echo -e "Done\n"
 
 echo "Copying jar and scripts to $JEN_HOME"
 cp -v target/jenever.jar $JEN_HOME
-cp -rv scripts $JEN_HOME
+cp -rv scripts\linux $JEN_HOME
 echo -e "Done\n"
 
 echo "Install complete"
