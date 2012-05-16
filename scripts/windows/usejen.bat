@@ -22,4 +22,9 @@ if not "%JEN_ENV%" == "" (
 
 echo New path = %CLASSPATH%
 
-doskey java=java -version
+for /f %%i in ('classpath_mod -version') do set NEW_ARGS=%%i
+
+doskey java=java %NEW_ARGS%
+
+set NEW_ARGS=
+
