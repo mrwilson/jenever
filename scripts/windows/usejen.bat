@@ -21,3 +21,5 @@ if not "%JEN_ENV%" == "" (
 )
 
 echo New path = %CLASSPATH%
+
+doskey java=java -version
